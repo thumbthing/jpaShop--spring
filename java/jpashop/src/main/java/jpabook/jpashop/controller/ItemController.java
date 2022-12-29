@@ -70,7 +70,9 @@ public class ItemController {
 
     @PostMapping("items/{id}/edit")
     public String updateItem(@PathVariable("id") Long no, BookForm item) {
+      // db 에서 가져와야하 한다
         Book book = new Book();
+
         book.setId(no);
         book.setName(item.getName());
         book.setPrice(item.getPrice());
