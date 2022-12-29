@@ -7,7 +7,9 @@ import jpabook.jpashop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Service
@@ -59,12 +61,8 @@ public class OrderService {
     }
     // 주문 조회 (동적 조회)
     // 회원명과 주문 상태에 따라 동적으로 달라짐
-    public List<Order> findAll(String name, OrderStatus status) {
-        // 서버로 jpql을 보내줘야함
-        // 주문을 한 회원의 모든 목록을 join 해서 보내줘야함
-        String jpql = "select o From Order o join o.member m";
-
-        jpql += " where";
+    public List<Order> searchOrders(OrderSearch orderSearch) {
+       return orderRepository.findAll(orderSearch);
     }
 
 }

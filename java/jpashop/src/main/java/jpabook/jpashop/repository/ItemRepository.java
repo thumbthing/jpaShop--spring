@@ -18,6 +18,8 @@ public class ItemRepository {
         //db에 없을때
         if(item.getId() == null) {
             em.persist(item);
+            System.out.println("재고 저장");
+            System.out.println(item.getName());
         } else {
             // 이미 있으면 업데이트
             em.merge(item);
