@@ -70,8 +70,9 @@ public class ItemController {
 
     @PostMapping("items/{id}/edit")
     public String updateItem(@PathVariable("id") Long no, BookForm item) {
-        Book book = new Book();
-        book.setId(no);
+
+        Book book = itemService.findItem(no);
+
         book.setName(item.getName());
         book.setPrice(item.getPrice());
         book.setStockQuantity(item.getStockQuantity());
