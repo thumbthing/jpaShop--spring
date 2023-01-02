@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+    .error {
+        color: #bd2130;
+    }
+</style>
+
+<body>
+  <div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+
+    <form action="/members/new" th:object="${memberForm}" method="post">
+
+<!--      회원등록을 작성-->
+      <div class="form-group">
+        <label th:for="name">이름</label>
+        <input type="text" class="form-control" th:field="*{name}" placeholder="이름을 입력하세요"
+            th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'"
+        >
+      <!--                                                    class를 변경하기 때문에 작성한 것 스타일이 바뀐다-->
+      <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+<!--        memberForm 에 있는 에러를 보내준다-->
+      </div>
+      <div class="form-group">
+        <label th:for="city">도시</label>
+        <input type="text" class="form-control" th:field="*{city}" placeholder="도시를 입력하세요"
+               th:class="${#fields.hasErrors('city')}? 'form-control fieldError' : 'form-control'">
+          <p class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+      </div>
+
+      <div class="form-group">
+        <label th:for="street">거리</label>
+        <input type="text" class="form-control" th:field="*{street}" placeholder="거리를 입력하세요">
+      </div>
+
+      <div class="form-group">
+        <label th:for="zipcode">우편번호</label>
+        <input type="text" class="form-control" th:field="*{zipcode}" placeholder="우편번호를을 입력하세요"
+               th:class="${#fields.hasErrors('zipcode')}? 'form-control fieldError' : 'form-control'">
+          <p class="error" th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></p>
+      </div>
+      <button type="submit" class="btn btn-primary">submit</button>
+
+
+    </form>
+
+
+      <div th:replace="fragments/footer :: footer"></div>
+  </div>
+</body>
+</html>
