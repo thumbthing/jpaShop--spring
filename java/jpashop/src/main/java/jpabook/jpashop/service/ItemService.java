@@ -34,17 +34,18 @@ public class ItemService {
 
 
     // update 없어서 작성해줬음
-    @Transactional
-    public void update(Book item) {
+    // 근데 사실 필요 없었음
+//    @Transactional
+//    public void update(Book item) {
 //        Book itemToUpdate = itemRepository.findOne(item.getId());
 //        itemToUpdate.setName(item.getName());
 //        itemToUpdate.setPrice(item.getPrice());
 //        itemToUpdate.setStockQuantity(item.getStockQuantity());
 //        itemToUpdate.setAuthor(item.getAuthor());
 //        itemToUpdate.setIsbn(item.getIsbn());
-
-        itemRepository.save(item);
-    }
+//
+//        itemRepository.save(item);
+//    }
 
 
 }

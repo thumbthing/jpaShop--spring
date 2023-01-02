@@ -20,7 +20,7 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    @GetMapping("items/new")
+    @GetMapping("/items/new")
     public String newItem(Model model) {
 
         model.addAttribute("form", new BookForm());
@@ -28,7 +28,7 @@ public class ItemController {
         return "items/createItemForm";
     }
 
-    @PostMapping("items/new")
+    @PostMapping("/items/new")
     public String join(@Valid BookForm form, BindingResult result) {
         if(result.hasErrors()) {
             System.out.println(result.getTarget());
@@ -48,14 +48,14 @@ public class ItemController {
         return "redirect:/";
     }
 
-    @GetMapping("items")
+    @GetMapping("/items")
     public String itemList(Model model) {
         List<Item> items = itemService.findItems();
         model.addAttribute("items", items);
         return "items/itemList";
     }
 
-    @GetMapping("items/{id}/edit")
+    @GetMapping("/items/{id}/edit")
     public String updateForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("id", id);
         Item item = itemService.findItem(id);
@@ -68,31 +68,34 @@ public class ItemController {
         return "items/editItem";
     }
 
-    @PostMapping("items/{id}/edit")
-    public String updateItem(@PathVariable("id") Long no, BookForm item) {
+    @PostMapping("/items/{id}/edit")
+    public String updateItem(@PathVariable("id") Long id, BookForm item) {
       // db 에서 가져와야하 한다
-        Book book = new Book();
+        Book book = (Book) itemService.findItem(id);
 
-        book.setId(no);
         book.setName(item.getName());
         book.setPrice(item.getPrice());
         book.setStockQuantity(item.getStockQuantity());
         book.setAuthor(item.getAuthor());
         book.setIsbn(item.getIsbn());
 
+//        System.out.println("--------------------");
+//        System.out.println("컨트롤러");
+//        System.out.println(book.getId());
+//        System.out.println(book.getName());
+//        System.out.println(book.getPrice());
+//        System.out.println(book.getIsbn());
+//        System.out.println(book.getStockQuantity());
+//        System.out.println(book.getAuthor());
+//        System.out.println("---------------------");
 
-        System.out.println("--------------------");
-        System.out.println("컨트롤러");
-        System.out.println(book.getId());
-        System.out.println(book.getName());
-        System.out.println(book.getPrice());
-        System.out.println(book.getIsbn());
-        System.out.println(book.getStockQuantity());
-        System.out.println(book.getAuthor());
-        System.out.println("---------------------");
+        itemService.saveItem(book);
+        return "redirect:/items";
 
-        itemService.update(book);
-        return "redirect:items/itemList";
+        // redirect 뒤에 /를 안붙이면 url 뒤에 붙는다
+        // 위에 있는 컨트롤러로 가게 하던지
+        // 아니면 경로를 제대로 입력하던지 그렇게 해야할듯
+
     }
 
 
