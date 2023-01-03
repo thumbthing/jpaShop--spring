@@ -29,7 +29,7 @@ public class MemberRepository {
     // List 문제 있을 수 있음
     public List<Member> findByName(String name) {
         //                                             이 Member는 객체를 뜻함
-        return em. createQuery("select m from Member m where m.name = :name",
+        return em.createQuery("select m from Member m where m.name = :name",
                 Member.class)
                 .setParameter("name", name)
                 .getResultList();

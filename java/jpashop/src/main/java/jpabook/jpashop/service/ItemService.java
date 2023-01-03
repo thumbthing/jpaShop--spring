@@ -23,13 +23,12 @@ public class ItemService {
         return item.getId();
     }
 
-    public Item findItem(Long itemId) {
-        return itemRepository.findOne(itemId);
-    }
-
     // findlist가 없어서 작성해줬음
     public List<Item> findItems() {
         return itemRepository.findAll();
+    }
+    public Item findItem(Long itemId) {
+        return itemRepository.findOne(itemId);
     }
 
 

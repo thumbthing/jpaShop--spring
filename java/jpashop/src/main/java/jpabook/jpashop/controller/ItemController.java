@@ -1,8 +1,12 @@
 package jpabook.jpashop.controller;
 
+import jpabook.jpashop.controller.form.AlbumForm;
 import jpabook.jpashop.controller.form.BookForm;
+import jpabook.jpashop.controller.form.MovieForm;
+import jpabook.jpashop.domain.Album;
 import jpabook.jpashop.domain.Book;
 import jpabook.jpashop.domain.Item;
+import jpabook.jpashop.domain.Movie;
 import jpabook.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,16 +23,21 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
-
+    // 3가지 카테고리 페이지 띄워주기
     @GetMapping("/items/new")
     public String newItem(Model model) {
-
-        model.addAttribute("form", new BookForm());
-
         return "items/createItemForm";
     }
 
-    @PostMapping("/items/new")
+    // book getmapping
+    @GetMapping("/items/newBook")
+    public String newBook(Model model) {
+        BookForm bookForm = new BookForm();
+        model.addAttribute("form", bookForm);
+        return "items/bookCreate";
+    }
+    // book post
+    @PostMapping("/items/book/create")
     public String join(@Valid BookForm form, BindingResult result) {
         if(result.hasErrors()) {
             System.out.println(result.getTarget());
@@ -41,10 +50,58 @@ public class ItemController {
         book.setAuthor(form.getAuthor());
         book.setIsbn(form.getIsbn());
 
-        System.out.println(book);
-        System.out.println(book.getAuthor());
-        System.out.println(book.getId());
         itemService.saveItem(book);
+        return "redirect:/";
+    }
+
+    // album getmapping
+    @GetMapping("/items/newAlbum")
+    public String newAlbum(Model model) {
+        AlbumForm albumForm = new AlbumForm();
+        model.addAttribute("form", albumForm);
+        return "items/albumCreate";
+    }
+    // album post
+    @PostMapping("/items/album/create")
+    public String join(@Valid AlbumForm form, BindingResult result) {
+        if(result.hasErrors()) {
+            System.out.println(result.getTarget());
+            return "items/createItemForm";
+        }
+        Album album = new Album();
+        album.setName(form.getName());
+        album.setPrice(form.getPrice());
+        album.setStockQuantity(form.getStockQuantity());
+        album.setArtist(form.getArtist());
+        album.setEtc(form.getEtc());
+
+        itemService.saveItem(album);
+        return "redirect:/";
+    }
+
+
+    // movie getmapping
+    @GetMapping("/items/newMovie")
+    public String newMovie(Model model) {
+        MovieForm movieForm = new MovieForm();
+        model.addAttribute("form", movieForm);
+        return "items/movieCreate";
+    }
+    // movie post
+    @PostMapping("/items/movie/create")
+    public String join(@Valid MovieForm form, BindingResult result) {
+        if(result.hasErrors()) {
+            System.out.println(result.getTarget());
+            return "items/createItemForm";
+        }
+        Movie movie = new Movie();
+        movie.setName(form.getName());
+        movie.setPrice(form.getPrice());
+        movie.setStockQuantity(form.getStockQuantity());
+        movie.setDirector(form.getDirector());
+        movie.setActor(form.getActor());
+
+        itemService.saveItem(movie);
         return "redirect:/";
     }
 
