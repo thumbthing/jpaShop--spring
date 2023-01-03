@@ -79,16 +79,6 @@ public class ItemController {
         book.setAuthor(item.getAuthor());
         book.setIsbn(item.getIsbn());
 
-//        System.out.println("--------------------");
-//        System.out.println("컨트롤러");
-//        System.out.println(book.getId());
-//        System.out.println(book.getName());
-//        System.out.println(book.getPrice());
-//        System.out.println(book.getIsbn());
-//        System.out.println(book.getStockQuantity());
-//        System.out.println(book.getAuthor());
-//        System.out.println("---------------------");
-
         itemService.saveItem(book);
         return "redirect:/items";
 
